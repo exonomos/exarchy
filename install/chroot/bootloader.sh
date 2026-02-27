@@ -1,5 +1,7 @@
+#!/usr/bin/env bash
+
 echo "-> Installing Limine, Snapper, and Sync tools..."
-pacman -S --noconfirm limine limine-snapper-sync snapper snap-pac
+pacman -S --noconfirm limine limine-snapper-sync snapper snap-pac inotify-tools
 
 echo "-> Deploying Limine to EFI..."
 mkdir -p /boot/EFI/BOOT
@@ -28,23 +30,34 @@ TIMEOUT=3
 //Snapshots
 EOF
 
-# Wichtig für den Sync-Dienst, damit er weiß, welchen Eintrag er kopieren soll
 echo "TARGET_OS_NAME=CachyOS" >/etc/default/limine
 
 echo "-> Adapting mkinitcpio hooks for LUKS and systemd..."
 sed -i 's/^HOOKS=(.*)/HOOKS=(base systemd autodetect microcode modconf kms keyboard sd-vconsole block sd-encrypt filesystems fsck)/' /etc/mkinitcpio.conf
 mkinitcpio -P
 
-echo "-> Configuring Snapper (Flat Layout Workaround)..."
-# Snapper zickt, wenn /.snapshots schon gemountet ist. Wir müssen es kurz unmounten,
-# die Config erstellen, das störende Subvolume löschen und unseres wieder einhängen.
-umount /.snapshots
-rm -rf /.snapshots
-snapper -c root create-config /
-btrfs subvolume delete /.snapshots
-mkdir /.snapshots
-mount -a
+echo "-> Configuring Snapper (Manual Flat Layout Workaround for chroot)..."
+# 1. Wir legen die Config-Datei manuell an, anstatt 'snapper -c root create-config' zu nutzen,
+#    da dbus im chroot nicht verlässlich läuft.
+mkdir -p /etc/snapper/configs
+cp /usr/share/snapper/config-templates/default /etc/snapper/configs/root
+
+# 2. Wir passen die root-Config an, damit sie auf BTRFS zugreift und Timeline-Snapshots aktiviert sind
+sed -i 's/^SUBVOLUME=.*/SUBVOLUME="\/"/' /etc/snapper/configs/root
+sed -i 's/^ALLOW_USERS=.*/ALLOW_USERS="exonomos"/' /etc/snapper/configs/root
+sed -i 's/^TIMELINE_CREATE=.*/TIMELINE_CREATE="yes"/' /etc/snapper/configs/root
+sed -i 's/^TIMELINE_LIMIT_HOURLY=.*/TIMELINE_LIMIT_HOURLY="5"/' /etc/snapper/configs/root
+sed -i 's/^TIMELINE_LIMIT_DAILY=.*/TIMELINE_LIMIT_DAILY="7"/' /etc/snapper/configs/root
+sed -i 's/^TIMELINE_LIMIT_WEEKLY=.*/TIMELINE_LIMIT_WEEKLY="0"/' /etc/snapper/configs/root
+sed -i 's/^TIMELINE_LIMIT_MONTHLY=.*/TIMELINE_LIMIT_MONTHLY="0"/' /etc/snapper/configs/root
+sed -i 's/^TIMELINE_LIMIT_YEARLY=.*/TIMELINE_LIMIT_YEARLY="0"/' /etc/snapper/configs/root
+
+# 3. Wir machen Snapper die Config bekannt
+sed -i 's/^SNAPPER_CONFIGS=.*/SNAPPER_CONFIGS="root"/' /etc/conf.d/snapper
 
 echo "-> Enabling Snapper and Limine sync timers..."
 systemctl enable snapper-timeline.timer
 systemctl enable snapper-cleanup.timer
+# Aktiviert den Hook von limine-snapper-sync (falls es als Service installiert wurde,
+# bei CachyOS ist es oft ein inotify-Service oder Hook). Wir aktivieren den inotify-Service sicherheitshalber:
+systemctl enable limine-snapper-watcher.service || true
