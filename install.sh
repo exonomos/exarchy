@@ -19,3 +19,11 @@ echo ">>> Pre-install complete."
 echo ">>> Starting base system installation..."
 source "$EXARCHY_INSTALL/base/all.sh"
 echo ">>> Base system installation complete."
+
+# Change root into the new system
+echo ">>> Starting chroot configuration..."
+# Kopiere das gesamte Repo in das neue System
+cp -R "$EXARCHY_PATH" /mnt/root/exarchy
+# Führe das chroot-Verteilerskript innerhalb des neuen Systems aus
+arch-chroot /mnt /bin/bash "/root/exarchy/install/chroot/all.sh"
+echo ">>> Chroot configuration complete."
