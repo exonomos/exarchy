@@ -29,7 +29,7 @@ mount -o "$BTRFS_OPTS",subvol=@srv /dev/mapper/cryptroot /mnt/srv
 mount -o "$BTRFS_OPTS",subvol=@cache /dev/mapper/cryptroot /mnt/var/cache
 mount -o "$BTRFS_OPTS",subvol=@log /dev/mapper/cryptroot /mnt/var/log
 mount -o "$BTRFS_OPTS",subvol=@tmp /dev/mapper/cryptroot /mnt/var/tmp
-mount -o "$BTRFS_OPTS",subvol=@snapshots /dev/mapper/cryptroot mnt/.snapshots
+mount -o "$BTRFS_OPTS",subvol=@snapshots /dev/mapper/cryptroot /mnt/.snapshots
 
 echo "-> Mounting EFI partition..."
 mount "${DISK}1" /mnt/boot
