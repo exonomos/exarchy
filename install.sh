@@ -7,7 +7,7 @@ set -e
 export EXARCHY_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 export EXARCHY_INSTALL="$EXARCHY_PATH/install"
 
-echo ">>> Starting Exarchy bootstrap process..."
+echo ">>> Starting Exarchy pre-install process..."
 
 # Execute the pre-install sequence
 source "$EXARCHY_INSTALL/pre-install/all.sh"
