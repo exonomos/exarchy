@@ -10,9 +10,12 @@ export EXARCHY_INSTALL="$EXARCHY_PATH/install"
 # Set variable for disk
 export DISK="/dev/vda"
 
-echo ">>> Starting Exarchy pre-install process..."
-
 # Execute the pre-install sequence
+echo ">>> Starting pre-install process..."
 source "$EXARCHY_INSTALL/pre-install/all.sh"
+echo ">>> Pre-install complete."
 
-echo ">>> Exarchy pre-install complete."
+# Execute the base system installation
+echo ">>> Starting base system installation..."
+source "$EXARCHY_INSTALL/base/all.sh"
+echo ">>> Base system installation complete."
