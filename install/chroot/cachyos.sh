@@ -5,7 +5,7 @@ tar xvf cachyos-repo.tar.xz
 cd cachyos-repo
 
 # Das Skript richtet pacman.conf und die Keyrings automatisch ein
-./cachyos-repo.sh
+./cachyos-repo.sh --noconfirm
 
 cd ..
 rm -rf cachyos-repo cachyos-repo.tar.xz
