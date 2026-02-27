@@ -7,6 +7,9 @@ set -e
 export EXARCHY_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 export EXARCHY_INSTALL="$EXARCHY_PATH/install"
 
+# Set variable for disk
+export DISK="/dev/vda"
+
 echo ">>> Starting Exarchy pre-install process..."
 
 # Execute the pre-install sequence
