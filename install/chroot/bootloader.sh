@@ -58,6 +58,3 @@ sed -i 's/^SNAPPER_CONFIGS=.*/SNAPPER_CONFIGS="root"/' /etc/conf.d/snapper
 echo "-> Enabling Snapper and Limine sync timers..."
 systemctl enable snapper-timeline.timer
 systemctl enable snapper-cleanup.timer
-# Aktiviert den Hook von limine-snapper-sync (falls es als Service installiert wurde,
-# bei CachyOS ist es oft ein inotify-Service oder Hook). Wir aktivieren den inotify-Service sicherheitshalber:
-systemctl enable limine-snapper-watcher.service || true
