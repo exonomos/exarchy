@@ -13,27 +13,27 @@ echo "-> Configuring Limine..."
 cat <<EOF >/boot/limine.conf
 TIMEOUT=3
 
-/CachyOS
-//CachyOS Default
+/Exarchy
+//linux-cachyos
     protocol: linux
     path: boot():/vmlinuz-linux-cachyos
     cmdline: root=/dev/mapper/cryptroot rootflags=subvol=@ rw quiet loglevel=3 rd.luks.name=${CRYPT_UUID}=cryptroot
     module_path: boot():/intel-ucode.img
     module_path: boot():/initramfs-linux-cachyos.img
 
-/Vanilla Arch Fallback
-//Vanilla Arch Fallback Default
+//Snapshots
+
+/Exarchy-LTS
+//linux-cachyos-lts
     protocol: linux
     path: boot():/vmlinuz-linux
     cmdline: root=/dev/mapper/cryptroot rootflags=subvol=@ rw quiet loglevel=3 rd.luks.name=${CRYPT_UUID}=cryptroot
     module_path: boot():/intel-ucode.img
     module_path: boot():/initramfs-linux.img
-
-//Snapshots
 EOF
 
 echo "-> Configuring Limine sync variables..."
-echo "TARGET_OS_NAME=CachyOS" >/etc/default/limine
+echo "TARGET_OS_NAME=Exarchy" >/etc/default/limine
 # Teilt dem Sync-Tool mit, dass wir ein BTRFS Flat-Layout (@snapshots) nutzen
 echo "ROOT_SNAPSHOTS_PATH=/@snapshots" >>/etc/default/limine
 
