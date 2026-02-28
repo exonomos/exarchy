@@ -63,3 +63,4 @@ sed -i 's/^SNAPPER_CONFIGS=.*/SNAPPER_CONFIGS="root"/' /etc/conf.d/snapper
 echo "-> Enabling Snapper and Limine sync timers..."
 systemctl enable snapper-timeline.timer
 systemctl enable snapper-cleanup.timer
+systemctl enable limine-snapper-sync.service
