@@ -7,7 +7,7 @@ echo "-> Deploying Limine to EFI..."
 mkdir -p /boot/EFI/BOOT
 cp /usr/share/limine/BOOTX64.EFI /boot/EFI/BOOT/BOOTX64.EFI
 
-CRYPT_UUID=$(blkid -s UUID -o value /dev/vda2)
+CRYPT_UUID=$(blkid -s UUID -o value /dev/"${DISK}2)
 
 echo "-> Configuring Limine..."
 cat <<EOF >/boot/limine.conf

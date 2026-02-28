@@ -10,20 +10,34 @@ export EXARCHY_INSTALL="$EXARCHY_PATH/install"
 # Set variable for disk
 export DISK="/dev/vda"
 
-# Execute the pre-install sequence
-echo ">>> Starting pre-install process..."
-source "$EXARCHY_INSTALL/pre-install/all.sh"
-echo ">>> Pre-install complete."
+echo ">>> Starting Exarchy Installation on $DISK..."
 
-# Execute the base system installation
-echo ">>> Starting base system installation..."
-source "$EXARCHY_INSTALL/base/all.sh"
-echo ">>> Base system installation complete."
+# ==========================================
+# PHASE 1: LIVE ENVIRONMENT (Outside chroot)
+# ==========================================
 
-# Change root into the new system
-echo ">>> Starting chroot configuration..."
-# Kopiere das gesamte Repo in das neue System
+source "$EXARCHY_INSTALL/helpers/all.sh"
+source "$EXARCHY_INSTALL/preflight/all.sh"
+source "$EXARCHY_INSTALL/disk-setup/all.sh"
+source "$EXARCHY_INSTALL/base-system/all.sh"
+
+# ==========================================
+# PHASE 2: CHROOT ENVIRONMENT (Inside /mnt)
+# ==========================================
+
+echo ">>> Transitioning to chroot environment..."
+
+# 1. Copy the entire repository to the new system
 cp -R "$EXARCHY_PATH" /mnt/root/exarchy
-# Führe das chroot-Verteilerskript innerhalb des neuen Systems aus
-arch-chroot /mnt /bin/bash "/root/exarchy/install/chroot/all.sh"
-echo ">>> Chroot configuration complete."
+
+# 2. Execute all remaining phases within the chroot using a single statement
+arch-chroot /mnt /bin/bash -c "
+    source /root/exarchy/install/chroot-system/all.sh && \
+    source /root/exarchy/install/chroot-general/all.sh && \
+    source /root/exarchy/install/hardware-daemons/all.sh && \
+    source /root/exarchy/install/desktop-hyprland/all.sh && \
+    source /root/exarchy/install/user-space/all.sh && \
+    source /root/exarchy/install/dotfiles/all.sh
+"
+
+echo ">>> Installation complete. You can now reboot."

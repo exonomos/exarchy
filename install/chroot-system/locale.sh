@@ -14,6 +14,3 @@ echo "LANG=en_US.UTF-8" >/etc/locale.conf
 
 echo "-> Setting console keymap..."
 echo "KEYMAP=de-latin1" >/etc/vconsole.conf
-
-echo "-> Setting hostname..."
-echo "exarchy" >/etc/hostname

@@ -11,6 +11,3 @@ yes | ./cachyos-repo.sh
 
 cd ..
 rm -rf cachyos-repo cachyos-repo.tar.xz
-
-echo "-> Installing CachyOS Kernel..."
-pacman -S --noconfirm linux-cachyos linux-cachyos-headers linux-cachyos-lts linux-cachyos-lts-headers
