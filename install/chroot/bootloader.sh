@@ -14,6 +14,7 @@ cat <<EOF >/boot/limine.conf
 TIMEOUT=3
 
 /CachyOS
+//CachyOS Default
     protocol: linux
     path: boot():/vmlinuz-linux-cachyos
     cmdline: root=/dev/mapper/cryptroot rootflags=subvol=@ rw quiet loglevel=3 rd.luks.name=${CRYPT_UUID}=cryptroot
@@ -21,6 +22,7 @@ TIMEOUT=3
     module_path: boot():/initramfs-linux-cachyos.img
 
 /Vanilla Arch Fallback
+//Vanilla Arch Fallback Default
     protocol: linux
     path: boot():/vmlinuz-linux
     cmdline: root=/dev/mapper/cryptroot rootflags=subvol=@ rw quiet loglevel=3 rd.luks.name=${CRYPT_UUID}=cryptroot
