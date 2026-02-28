@@ -32,6 +32,7 @@ cp -R "$EXARCHY_PATH" /mnt/root/exarchy
 
 # 2. Execute all remaining phases within the chroot using a single statement
 arch-chroot /mnt /bin/bash -c "
+    set -e
     source /root/exarchy/install/chroot-system/all.sh && \
     source /root/exarchy/install/chroot-general/all.sh && \
     source /root/exarchy/install/hardware-daemons/all.sh && \
