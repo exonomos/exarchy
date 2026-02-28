@@ -30,7 +30,10 @@ TIMEOUT=3
 //Snapshots
 EOF
 
+echo "-> Configuring Limine sync variables..."
 echo "TARGET_OS_NAME=CachyOS" >/etc/default/limine
+# Teilt dem Sync-Tool mit, dass wir ein BTRFS Flat-Layout (@snapshots) nutzen
+echo "ROOT_SNAPSHOTS_PATH=/@snapshots" >>/etc/default/limine
 
 echo "-> Adapting mkinitcpio hooks for LUKS and systemd..."
 sed -i 's/^HOOKS=(.*)/HOOKS=(base systemd autodetect microcode modconf kms keyboard sd-vconsole block sd-encrypt filesystems fsck)/' /etc/mkinitcpio.conf
