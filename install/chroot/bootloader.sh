@@ -21,15 +21,15 @@ TIMEOUT=3
     module_path: boot():/intel-ucode.img
     module_path: boot():/initramfs-linux-cachyos.img
 
-//Snapshots
 
-/Exarchy-LTS
 //linux-cachyos-lts
     protocol: linux
     path: boot():/vmlinuz-linux
     cmdline: root=/dev/mapper/cryptroot rootflags=subvol=@ rw quiet loglevel=3 rd.luks.name=${CRYPT_UUID}=cryptroot
     module_path: boot():/intel-ucode.img
     module_path: boot():/initramfs-linux.img
+
+//Snapshots
 EOF
 
 echo "-> Configuring Limine sync variables..."
