@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 echo "-> Setting timezone..."
 ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
 hwclock --systohc

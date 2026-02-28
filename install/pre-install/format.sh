@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 echo "-> Formatting EFI partition..."
 mkfs.fat -F 32 "${DISK}1"
 

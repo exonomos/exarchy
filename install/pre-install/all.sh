@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 source "$EXARCHY_INSTALL/pre-install/loadkeys.sh"
 source "$EXARCHY_INSTALL/pre-install/timedatectl.sh"
 source "$EXARCHY_INSTALL/pre-install/partition.sh"

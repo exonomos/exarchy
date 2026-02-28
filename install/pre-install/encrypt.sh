@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 echo "-> Setting up LUKS encryption on ${DISK}2..."
 cryptsetup luksFormat "${DISK}2"
 

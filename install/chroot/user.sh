@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 echo "-> Installing Fish..."
 pacman -S --noconfirm fish
 

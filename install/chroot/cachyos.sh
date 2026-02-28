@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 echo "-> Integrating CachyOS repositories..."
 # CachyOS Repo-Integration herunterladen und ausführen
 curl -O https://mirror.cachyos.org/cachyos-repo.tar.xz

@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 echo "-> Wiping disk $DISK..."
 sgdisk -Z "$DISK"
 

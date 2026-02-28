@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 echo "-> Creating BTRFS subvolumes..."
 mount /dev/mapper/cryptroot /mnt
 
